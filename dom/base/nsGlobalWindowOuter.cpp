@@ -1383,7 +1383,8 @@ bool nsGlobalWindowOuter::ComputeIsSecureContext(nsIDocument* aDocument,
     return false;
   }
 
-  if (nsContentUtils::HttpsStateIsModern(aDocument)) {
+  if (nsContentUtils::HttpsStateIsModern(aDocument) ||
+      nsContentUtils::DocumentHasOnionURI(aDocument)) {
     return true;
   }
 
@@ -4587,7 +4588,7 @@ void nsGlobalWindowOuter::HomeOuter(nsIPrincipal& aSubjectPrincipal,
   Preferences::GetLocalizedString(PREF_BROWSER_STARTUP_HOMEPAGE, homeURL);
 
   if (homeURL.IsEmpty()) {
-  // if all else fails, use this
+    // if all else fails, use this
 #ifdef DEBUG_seth
     printf("all else failed.  using %s as the home page\n", DEFAULT_HOME_PAGE);
 #endif
