@@ -1814,13 +1814,6 @@ function addMissingIntermediateCertificate() {
   }
   logger.debug("hotfix for addon signing cert has not been applied; applying");
 
-  // temporarily disable nocertb so we can write cert
-  const PREF_NOCERTDB = "security.nocertdb";
-  let userNocertdb = Services.prefs.getBoolPref(PREF_NOCERTDB, true);
-  if (userNocertdb) {
-    Services.prefs.setBoolPref(PREF_NOCERTDB, false);
-  }
-
   try {
     let certDB = Cc["@mozilla.org/security/x509certdb;1"].getService(Ci.nsIX509CertDB);
     certDB.addCertFromBase64(MISSING_INTERMEDIATE_CERTIFICATE, ",,");
@@ -1828,11 +1821,6 @@ function addMissingIntermediateCertificate() {
   } catch (e) {
     logger.error("failed to add new intermediate certificate:", e);
     return;
-  } finally {
-    // revert nocertdb pref to original value (even if exception thrown)
-    if (userNocertdb) {
-      Services.prefs.setBoolPref(PREF_NOCERTDB, true);
-    }
   }
 
   Services.prefs.setBoolPref(PREF_SIGNER_HOTFIXED, true);
