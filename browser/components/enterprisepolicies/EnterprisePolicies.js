@@ -78,20 +78,10 @@ EnterprisePoliciesManager.prototype = {
   _xpcom_factory: EnterprisePoliciesFactory,
 
   _initialize() {
-    let provider = this._chooseProvider();
-
-    if (!provider) {
-      this.status = Ci.nsIEnterprisePolicies.INACTIVE;
-      return;
-    }
-
-    if (provider.failed) {
-      this.status = Ci.nsIEnterprisePolicies.FAILED;
-      return;
-    }
-
-    this.status = Ci.nsIEnterprisePolicies.ACTIVE;
-    this._activatePolicies(provider.policies);
+    // We don't want to have any enterprise policies in Tor Browser enabled as
+    // those can affect proxy settings etc. See: e.g. #30575.
+    this.status = Ci.nsIEnterprisePolicies.INACTIVE;
+    return;
   },
 
   _chooseProvider() {
