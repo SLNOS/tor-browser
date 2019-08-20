@@ -1119,6 +1119,8 @@ class nsContentUtils {
     eNECKO_PROPERTIES,
     eFORMS_PROPERTIES_MAYBESPOOF,
     eFORMS_PROPERTIES_en_US,
+    eDOM_PROPERTIES_MAYBESPOOF,
+    eDOM_PROPERTIES_en_US,
     PropertiesFile_COUNT
   };
   static nsresult ReportToConsole(
@@ -1131,6 +1133,8 @@ class nsContentUtils {
   static void ReportEmptyGetElementByIdArg(const Document* aDoc);
 
   static void LogMessageToConsole(const char* aMsg);
+
+  static bool SpoofLocaleEnglish();
 
   /**
    * Get the localized string named |aKey| in properties file |aFile|.

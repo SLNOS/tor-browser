@@ -73,7 +73,7 @@ nsresult NumericInputTypeBase::GetRangeOverflowMessage(nsAString& aMessage) {
 
   const char16_t* params[] = {maxStr.get()};
   return nsContentUtils::FormatLocalizedString(
-      nsContentUtils::eDOM_PROPERTIES, "FormValidationNumberRangeOverflow",
+      nsContentUtils::eDOM_PROPERTIES_MAYBESPOOF, "FormValidationNumberRangeOverflow",
       params, aMessage);
 }
 
@@ -90,7 +90,7 @@ nsresult NumericInputTypeBase::GetRangeUnderflowMessage(nsAString& aMessage) {
 
   const char16_t* params[] = {minStr.get()};
   return nsContentUtils::FormatLocalizedString(
-      nsContentUtils::eDOM_PROPERTIES, "FormValidationNumberRangeUnderflow",
+      nsContentUtils::eDOM_PROPERTIES_MAYBESPOOF, "FormValidationNumberRangeUnderflow",
       params, aMessage);
 }
 
@@ -150,13 +150,13 @@ bool NumberInputType::HasBadInput() const {
 }
 
 nsresult NumberInputType::GetValueMissingMessage(nsAString& aMessage) {
-  return nsContentUtils::GetLocalizedString(nsContentUtils::eDOM_PROPERTIES,
+  return nsContentUtils::GetLocalizedString(nsContentUtils::eDOM_PROPERTIES_MAYBESPOOF,
                                             "FormValidationBadInputNumber",
                                             aMessage);
 }
 
 nsresult NumberInputType::GetBadInputMessage(nsAString& aMessage) {
-  return nsContentUtils::GetLocalizedString(nsContentUtils::eDOM_PROPERTIES,
+  return nsContentUtils::GetLocalizedString(nsContentUtils::eDOM_PROPERTIES_MAYBESPOOF,
                                             "FormValidationBadInputNumber",
                                             aMessage);
 }

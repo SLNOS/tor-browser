@@ -9,6 +9,7 @@
 #include "nsParserMsgUtils.h"
 #include "nsNetCID.h"
 #include "mozilla/Services.h"
+#include "nsContentUtils.h"
 
 static nsresult GetBundle(const char* aPropFileName,
                           nsIStringBundle** aBundle) {
@@ -20,6 +21,11 @@ static nsresult GetBundle(const char* aPropFileName,
   nsCOMPtr<nsIStringBundleService> stringService =
       mozilla::services::GetStringBundleService();
   if (!stringService) return NS_ERROR_FAILURE;
+
+  if (nsContentUtils::SpoofLocaleEnglish() &&
+      strcmp(aPropFileName, XMLPARSER_PROPERTIES) == 0) {
+    aPropFileName = XMLPARSER_PROPERTIES_en_US;
+  }
 
   return stringService->CreateBundle(aPropFileName, aBundle);
 }

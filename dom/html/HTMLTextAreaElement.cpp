@@ -1001,7 +1001,7 @@ nsresult HTMLTextAreaElement::GetValidationMessage(
 
       const char16_t* params[] = {strMaxLength.get(), strTextLength.get()};
       rv = nsContentUtils::FormatLocalizedString(
-          nsContentUtils::eDOM_PROPERTIES, "FormValidationTextTooLong", params,
+          nsContentUtils::eDOM_PROPERTIES_MAYBESPOOF, "FormValidationTextTooLong", params,
           message);
       aValidationMessage = message;
     } break;
@@ -1017,13 +1017,13 @@ nsresult HTMLTextAreaElement::GetValidationMessage(
 
       const char16_t* params[] = {strMinLength.get(), strTextLength.get()};
       rv = nsContentUtils::FormatLocalizedString(
-          nsContentUtils::eDOM_PROPERTIES, "FormValidationTextTooShort", params,
+          nsContentUtils::eDOM_PROPERTIES_MAYBESPOOF, "FormValidationTextTooShort", params,
           message);
       aValidationMessage = message;
     } break;
     case VALIDITY_STATE_VALUE_MISSING: {
       nsAutoString message;
-      rv = nsContentUtils::GetLocalizedString(nsContentUtils::eDOM_PROPERTIES,
+      rv = nsContentUtils::GetLocalizedString(nsContentUtils::eDOM_PROPERTIES_MAYBESPOOF,
                                               "FormValidationValueMissing",
                                               message);
       aValidationMessage = message;
