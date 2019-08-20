@@ -167,7 +167,7 @@ nsresult InputType::GetValidationMessage(
 
       const char16_t* params[] = {strMaxLength.get(), strTextLength.get()};
       rv = nsContentUtils::FormatLocalizedString(
-          nsContentUtils::eDOM_PROPERTIES, "FormValidationTextTooLong", params,
+          nsContentUtils::eDOM_PROPERTIES_MAYBESPOOF, "FormValidationTextTooLong", params,
           message);
       aValidationMessage = message;
       break;
@@ -185,7 +185,7 @@ nsresult InputType::GetValidationMessage(
 
       const char16_t* params[] = {strMinLength.get(), strTextLength.get()};
       rv = nsContentUtils::FormatLocalizedString(
-          nsContentUtils::eDOM_PROPERTIES, "FormValidationTextTooShort", params,
+          nsContentUtils::eDOM_PROPERTIES_MAYBESPOOF, "FormValidationTextTooShort", params,
           message);
 
       aValidationMessage = message;
@@ -216,7 +216,7 @@ nsresult InputType::GetValidationMessage(
       nsAutoString title;
       mInputElement->GetAttr(kNameSpaceID_None, nsGkAtoms::title, title);
       if (title.IsEmpty()) {
-        rv = nsContentUtils::GetLocalizedString(nsContentUtils::eDOM_PROPERTIES,
+        rv = nsContentUtils::GetLocalizedString(nsContentUtils::eDOM_PROPERTIES_MAYBESPOOF,
                                                 "FormValidationPatternMismatch",
                                                 message);
       } else {
@@ -227,7 +227,7 @@ nsresult InputType::GetValidationMessage(
         }
         const char16_t* params[] = {title.get()};
         rv = nsContentUtils::FormatLocalizedString(
-            nsContentUtils::eDOM_PROPERTIES,
+            nsContentUtils::eDOM_PROPERTIES_MAYBESPOOF,
             "FormValidationPatternMismatchWithTitle", params, message);
       }
       aValidationMessage = message;
@@ -279,12 +279,12 @@ nsresult InputType::GetValidationMessage(
         if (valueLowStr.Equals(valueHighStr)) {
           const char16_t* params[] = {valueLowStr.get()};
           rv = nsContentUtils::FormatLocalizedString(
-              nsContentUtils::eDOM_PROPERTIES,
+              nsContentUtils::eDOM_PROPERTIES_MAYBESPOOF,
               "FormValidationStepMismatchOneValue", params, message);
         } else {
           const char16_t* params[] = {valueLowStr.get(), valueHighStr.get()};
           rv = nsContentUtils::FormatLocalizedString(
-              nsContentUtils::eDOM_PROPERTIES, "FormValidationStepMismatch",
+              nsContentUtils::eDOM_PROPERTIES_MAYBESPOOF, "FormValidationStepMismatch",
               params, message);
         }
       } else {
@@ -293,7 +293,7 @@ nsresult InputType::GetValidationMessage(
 
         const char16_t* params[] = {valueLowStr.get()};
         rv = nsContentUtils::FormatLocalizedString(
-            nsContentUtils::eDOM_PROPERTIES,
+            nsContentUtils::eDOM_PROPERTIES_MAYBESPOOF,
             "FormValidationStepMismatchOneValue", params, message);
       }
 
@@ -319,7 +319,7 @@ nsresult InputType::GetValidationMessage(
 
 nsresult InputType::GetValueMissingMessage(nsAString& aMessage) {
   return nsContentUtils::GetLocalizedString(
-      nsContentUtils::eDOM_PROPERTIES, "FormValidationValueMissing", aMessage);
+      nsContentUtils::eDOM_PROPERTIES_MAYBESPOOF, "FormValidationValueMissing", aMessage);
 }
 
 nsresult InputType::GetTypeMismatchMessage(nsAString& aMessage) {
