@@ -2,15 +2,7 @@
 
 var EXPORTED_SYMBOLS = ["TorProtocolService"];
 
-const { TorLauncherUtil } = ChromeUtils.import(
-  "resource://torlauncher/modules/tl-util.jsm"
-);
-
 var TorProtocolService = {
-  _tlps: Cc["@torproject.org/torlauncher-protocol-service;1"].getService(
-    Ci.nsISupports
-  ).wrappedJSObject,
-
   // maintain a map of tor settings set by Tor Browser so that we don't
   // repeatedly set the same key/values over and over
   // this map contains string keys to primitive or array values
@@ -118,9 +110,6 @@ var TorProtocolService = {
       }
 
       let errorObject = {};
-      if (!this._tlps.TorSetConfWithReply(settingsObject, errorObject)) {
-        throw new Error(errorObject.details);
-      }
 
       // save settings to cache after successfully writing to Tor
       for (const [setting, value] of newSettings) {
@@ -131,11 +120,7 @@ var TorProtocolService = {
 
   _readSetting(aSetting) {
     this._assertValidSettingKey(aSetting);
-    let reply = this._tlps.TorGetConf(aSetting);
-    if (this._tlps.TorCommandSucceeded(reply)) {
-      return reply.lineArray;
-    }
-    throw new Error(reply.lineArray.join("\n"));
+    return [];
   },
 
   _readBoolSetting(aSetting) {
@@ -196,17 +181,15 @@ var TorProtocolService = {
 
   // writes current tor settings to disk
   flushSettings() {
-    this._tlps.TorSendCommand("SAVECONF");
+    return;
   },
 
   getLog() {
-    let countObj = { value: 0 };
-    let torLog = this._tlps.TorGetLog(countObj);
-    return torLog;
+    return "";
   },
 
   // true if we launched and control tor, false if using system tor
   get ownsTorDaemon() {
-    return TorLauncherUtil.shouldStartAndOwnTor;
+    return false;
   },
 };

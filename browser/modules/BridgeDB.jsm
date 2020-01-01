@@ -2,9 +2,6 @@
 
 var EXPORTED_SYMBOLS = ["BridgeDB"];
 
-const { TorLauncherBridgeDB } = ChromeUtils.import(
-  "resource://torlauncher/modules/tl-bridgedb.jsm"
-);
 const { TorProtocolService } = ChromeUtils.import(
   "resource:///modules/TorProtocolService.jsm"
 );
@@ -53,9 +50,7 @@ var BridgeDB = {
     // close and clear out existing state on captcha request
     this.close();
 
-    let transportPlugins = TorProtocolService.readStringArraySetting(
-      TorStrings.configKeys.clientTransportPlugin
-    );
+    let transportPlugins = [];
 
     let meekClientPath;
     let meekTransport; // We support both "meek" and "meek_lite".
@@ -84,7 +79,7 @@ var BridgeDB = {
       }
     }
 
-    this._moatRequestor = TorLauncherBridgeDB.createMoatRequestor();
+    this._moatRequestor = null;
 
     return this._moatRequestor
       .init(aProxyURI, meekTransport, meekClientPath, meekClientArgs)
